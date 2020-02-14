@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 使用Jq将数组的内容展示在页面上 forEach遍历数组 -->
+    <!-- 展示商品信息，从对象数组中提取信息 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品信息</title>
+    <style>
+        .goods{
+            float: left;
+            margin:20px;
+            border: 2px solid rebeccapurple;
+        }
+        .goods>img{
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+
+    </div>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+        // 对象数组
+        var goodsInfo = [{
+            goodName:'商品A',
+            goodPrice:100,
+            goodSay:'很好',
+            goodPic:'../images/slide-1.jpg'
+        },
+        {
+            goodName:'商品B',
+            goodPrice:999,
+            goodSay:'还不错',
+            goodPic:'../images/slide-2.jpg'
+        },
+        {
+            goodName:'商品C',
+            goodPrice:55555,
+            goodSay:'很贵',
+            goodPic:'../images/slide-3.jpg'
+        }]
+        goodsInfo.forEach(function(value){
+            var goodDiv = $('<div class="goods">')
+                // 字符串模版  `<img src = '${value.goodPrice}' />`
+            // goodDiv.html(`<img src = '${value.goodPic}' /><span>${value.goodName}</span>`)
+            goodDiv.html('<img src ="'+value.goodPic+'"/><br><span>'+value.goodName+'</span><p>'+value.goodPrice+'</p><p>'+value.goodSay+'</p>')
+            $('.content').append(goodDiv)
+
+        })
+
+    </script>
+</body>
+</html>

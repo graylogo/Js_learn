@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 使用数组实现抽奖 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽奖</title>
+    <style>
+        .but{
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button class="but">抽奖按钮</button>
+    <div class="show">
+
+    </div>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+        var arr = ['a','b','c','d','e']
+        //随机数  通过内置对象 数学对象 Math
+        // 0 - 1的随机数 不包括0和1  Math.random()
+        // 下舍 Math.floor(值)
+        // 上进 Math.ceil(值)
+        //四舍五入  Math.round(值)
+        var luckyArr = []
+        var clickTime = 3    //方案二  直接判断生成数组luckyArr的长度，长度为3以后禁用按钮
+        $('.but').click(function(){
+        if (clickTime>0){
+            var  lucky = Math.floor(Math.random()*arr.length)  //[0,4]五个数，下舍保证概率均等，下面删除数组内容后length相应减少
+            console.log(lucky)
+            luckyArr.push(arr[lucky])
+            $('.show').text(luckyArr.join()) //直接显示新的数组
+            // 在数组中删除被选到的元素
+            arr.splice(lucky,1)
+            clickTime --
+            if(clickTime === 0){    //保证了点第三次的同时禁用按钮
+                $(this).attr('disabled',true)
+            }
+            //解除事件绑定 off方法   $('.but').off('click')  不传参解除所有事件绑定
+        }
+        })
+    </script>
+</body>
+</html>

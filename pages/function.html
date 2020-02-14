@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- 补全函数的笔记 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数的创建与调用</title>
+</head>
+<body>
+    <script>
+        // var sign = String
+       
+        function sum (num1,sign,num2){
+             var res =0
+            switch(sign){
+                case '+': res = num1+num2;break;
+                case '-': res = num1-num2;break;
+                case '*': res = num1*num2;break;
+                case '/': res = num1/num2;break;
+            }
+            return res;
+        }
+        var i =sum(3,'*',2)
+        console.log(i)
+    </script>
+</body>
+</html>

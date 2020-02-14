@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>去重操作</title>
+</head>
+<body>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+        //方法一： 先排序，再两两比较，
+        var numArr = [12,3,3,4,12,5,3,3,3,3]
+        //简单冒泡排序算法
+        for (var i =0; i<numArr.length-1; i++){
+            for(var j = 0; j<numArr.length-1-i; j++){
+                if(numArr[j]>numArr[j+1]){
+                    var temp = numArr[j]
+                    numArr[j] = numArr[j+1]
+                    numArr[j+1] = temp
+                }
+            }
+        }
+        for (var m = 0 ; m<numArr.length; m++){
+            if(numArr[m]===numArr[m+1]){
+                numArr.splice(m,1)
+                m--   //非常关键的一步， 因为splice删除数组元素以后会导致漏比较元素，所以要调整m的值
+            }
+        }
+        console.log(numArr)
+        //课程时间11点
+
+
+
+        //方法二： 新建一个空数组，将不存在新数组中的数放入
+        var arr = [12,3,3,4,12,5,3]
+        var newArr = []
+        for (var i = 0; i < arr.length; i++){
+            //判断现在 i 对应的arr数组内的数是否在newArr中存在
+            if (newArr.indexOf(arr[i]) === -1) {
+                newArr.push(arr[i])     
+            }
+        }
+        console.log(newArr)
+    </script>
+</html>

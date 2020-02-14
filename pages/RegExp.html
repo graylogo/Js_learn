@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 注册 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正则表达式</title>
+    <style>
+        .wrap{
+            margin:  0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <label for="username"><span>*</span>用户名</label><input id="username" type="text">
+        <p class="waring">请输入账号</p>
+        <p class="error">至少2-12位</p>
+    </div>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+        //正则表达式：用来检测字符串的某种规则
+        //正则表达式的创建  /中间写的内容都是规则（没有之前所学的数据类型）/
+        // var str = 'hello';
+        //  var re = /h/; 
+        // console.log(re.test(str));
+        // console.log(re.exec(str));
+
+        // //规则见笔记
+        // //qq邮箱  4-12位数字 + @ +(qq QQ)+ . + (con COM)
+        // var reQq = /^[0-9]{4,12}@(qq|QQ).(con|COM)$/
+
+        // //注册登陆界面
+        $('#username').focus(function(){
+            $('.waring').css('display','block')
+            $('.error').css('display','none')
+        })
+        // 正则表达式写在外面，避免重复执行
+        var re =/[\w.]/  //包含一位 非数字、字母、下划线
+        $('#username').blur(function(){
+            var nameValue = $(this).val()
+
+            if(nameValue === ''){
+                $('.waring').css('display','none')
+                // jquery的链式操作 前一个操作完成之后可以继续操作，操作的对象都是一样的
+                $('.error').css('display','block').text('用户名不能为空').css('color','red')
+            }else if(nameValue.length <6 || nameValue.length >16){
+                $('.waring').css('display','none')
+                $('.error').css('display','block').text('至少6-12位长度').css('color','red')
+            }else if(re.test(nameValue)){
+                $('.waring').css('display','none')
+                $('.error').css('display','block').text('用户名不符合需求').css('color','red')
+            }
+        })
+    </script>
+</body>
+</html>

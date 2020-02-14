@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- 鼠标划过时候实现手风琴切换效果 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轮播效果图</title>
+    <style>
+        .banner{
+            width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;   /*关键*/
+            height: 310px;
+        }
+        .banner>img{
+            width: 600px;
+            position:absolute;
+            /* transition-delay: 1s;   延迟*/ 
+            transition-duration: 1s;
+          
+        }
+        .banner>img:nth-child(1){
+            left: 0px;
+        }
+        .banner>img:nth-child(2){
+            left:200px;
+        }
+        .banner>img:nth-child(3){
+            left:400px;
+        }
+        .banner>img:nth-child(4){
+            left:600px;
+        }
+        .banner>img:nth-child(5){
+            left:800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <!-- img*5[src='../images/slide-$'] -->
+        <img src="../images/slide-1.jpg" alt="">
+        <img src="../images/slide-2.jpg" alt="">
+        <img src="../images/slide-3.jpg" alt="">
+        <img src="../images/slide-4.jpg" alt="">
+        <img src="../images/slide-5.jpg" alt="">
+    </div>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+        $('.banner>img').mouseenter(function(){
+            // 思考： 以第三张图片为例子，鼠标滑过第三张图面，所有图片修改其left
+            // 使用循环，反复做同一件事  --->  让所有人重复做同一件事
+            var ind = $(this).index()
+            for(var i=0 ; i<5; i++){
+                // 第一张：  0
+                // 第二张： 100
+                // 第三章： 200
+                // 第四章：800
+                // 第五章：  900
+                if(i <= ind){
+                    //左边的
+                    $('.banner>img').eq(i).css('left',i*100)
+                }else{
+                    // 右边的
+                    $('.banner>img').eq(i).css('left',600+(i-1)*100)
+                }
+            }
+        })
+        $('.banner>img').mouseleave(function(){
+            for(var i = 0; i<5; i++){
+                $('.banner>img').eq(i).css('left',i*100)
+            }
+        })
+    </script>
+</body>
+</html>

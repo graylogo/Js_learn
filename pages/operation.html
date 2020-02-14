@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- 四则运算 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四则运算</title>
+</head>
+<body>
+    <input class="num1" type="text">
+    <!-- <input class="sign" type="text"> -->
+    <select name="si" id="sign">
+        <option value="add">+</option>
+        <option value="sub">-</option>
+        <option value="mul">*</option>
+        <option value="div">/</option>
+    </select>
+    <input class="num2" type="text">
+    <button class="result">=</button>
+    <input class="res" type="text">
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+        // 输入数字一和数字二，点击等号，输出结果
+    $('.result').click(function(){
+        var num1 = $('.num1').val()
+        var num2 = $('.num2').val()
+        var sign = $('#sign').val()
+        switch(sign){
+            case 'add': $('.res').val(num1*1 + num2*1);break;
+            case 'sub': $('.res').val(num1 - num2);break;
+            case 'mul': $('.res').val(num1 * num2);break;
+            case 'div': $('.res').val(num1 / num2);break;
+            default: break;
+        }
+        // var res = num1*1 + num2*1  //隐式转换，换成数字
+        // $('.res').val(res)
+    })
+  
+    </script>
+    
+</body>
+</html>

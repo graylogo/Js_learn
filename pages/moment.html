@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- http://momentjs.cn/  官网 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日期处理插件</title>
+</head>
+<body>
+    <script src="../js/moment.js"></script>
+    <script src="../js/moment-with-locales.js"></script>
+    <script>
+        //时间处理插件  moment插件
+        moment.locale('zh-cn');
+        var a = moment().format('MMMM Do YYYY, h:mm:ss a');
+        console.log(a)
+    </script>
+</body>
+</html>

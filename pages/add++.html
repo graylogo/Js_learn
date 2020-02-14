@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 计算器 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点击显示连续的数字</title>
+</head>
+<body>
+    <input class="num" type="text">
+    <div class="number">
+        <button>0</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+    </div>
+    <div class="sign">
+        <button>+</button>
+        <button>-</button>
+        <button>*</button>
+        <button>/</button>
+    </div>
+    <button class="result">=</button>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+        // <!-- 点击数字，输入框显示对应的数字，并且连续点击连续显示数字 -->
+        // 累加算法
+        var number1 = ''
+        var number2 = ''
+        var sign = ''
+        // 获取数字1
+        $('.number>button').click(function(){
+            var num = $(this).text()
+            if (sign === ''){
+                number1 = number1+num
+                $('.num').val(number1)
+            }else{
+                number2 = number2+num
+                $('.num').val(number1+sign+number2)
+            }
+        })
+        // 获取符号
+        $('.sign>button').click(function(){
+            sign = $(this).text()
+            $('.num').val(number1 + sign)
+        })
+        // 点击等号进行运算
+        $('.result').click(function(){
+        switch(sign){
+            case '+': $('.num').val(number1*1 + number2*1);break;
+            case '-': $('.num').val(number1 - number2);break;
+            case '*': $('.num').val(number1 * number2);break;
+            case '/': $('.num').val(number1 / number2);break;
+            default: break;
+        }
+        // var res = num1*1 + num2*1  //隐式转换，换成数字
+        // $('.res').val(res)
+    })
+    </script>
+    
+</body>
+</html>

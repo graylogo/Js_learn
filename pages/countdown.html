@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 倒计时 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>倒计时</title>
+    <style>
+        .time{
+            font-size: 40px;
+            color: red;
+        }
+    </style>
+   
+</head>
+<body>
+    <div class="time">
+
+    </div>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+       //倒计时
+    //    截止时间： 16:00
+    var targetHour = 17
+    var targetMinute = 0
+    var targetSecond = 0
+    function show(){
+        var nowDate = new Date()   //要想获取时间，先要创建新的时间对象
+        var hours = nowDate.getHours()
+        var min = nowDate.getMinutes()
+        var second = nowDate.getSeconds()
+        //将所有是假换算成秒数再做差 ，然后得到剩下的总秒数，然后将该秒数换算并展示
+        var targetSeconds = targetHour*3600 + targetMinute*60 + targetSecond
+        var nowSconds = hours*3600 + min*60 + second
+
+        var showSecond = targetSeconds - nowSconds
+        if(showSecond === 0){
+            clearInterval(run)
+            $('.time').text('倒计时结束')
+            return    //跳出function
+        }
+
+        var showHour = Math.floor(showSecond/3600 )
+        var showMin = Math.floor(showSecond % 3600/60)
+        var showSecond = showSecond%3600%60
+
+        $('.time').text(`${showHour}:${showMin}:${showSecond}`)
+    }
+    show()
+    var run = setInterval(show,1000)
+    // 使用clearInterval 停止setInterval
+    // 使用clearInterval(setInterval的返回值)
+    // clearInterval(a)
+    </script>
+</body>
+</html>

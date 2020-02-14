@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS学习笔记</title>
+    <link rel="stylesheet" type="text/css" href="../css/class01.css">
+</head>
+<body>
+<!--用addClass方法制作一个贴在右边的导航栏-->
+<div class="wrap">
+    <ul>
+        <li><span>more</span><a href="#">link</a></li>
+        <li><span>more</span><a href="#">link</a></li>
+        <li><span>more</span><a href="#">link</a></li>
+        <li><span>more</span><a href="#">link</a></li>
+        <li><span>more</span><a href="#">link</a></li>
+        <li><span>more</span><a href="#">link</a></li>
+    </ul>
+</div>
+<script  type="text/javascript" src="../js/class01.js"></script>
+
+<script type="text/javascript" src="../js/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+    $(".wrap ul li").hover(function () {
+        $(this).find("a").addClass("active");
+        $(this).find("a").removeClass("active2");
+    },function () {
+        $(this).find("a").addClass("active2");
+        $(this).find("a").removeClass("active");
+    });
+</script>
+</body>
+</html>

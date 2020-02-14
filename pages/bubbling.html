@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 实现冒泡排序算法 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>冒泡排序算法</title>
+</head>
+<body>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+        var numArr =[2,3,1,9,6,7]
+        for (var i =0; i<numArr.length-1; i++){
+            for(var j = 0; j<numArr.length-1-i; j++){
+                if(numArr[j]>numArr[j+1]){
+                    var temp = numArr[j]
+                    numArr[j] = numArr[j+1]
+                    numArr[j+1] = temp
+                }
+            }
+        }
+        console.log(numArr)
+    </script>
+</body>
+</html>

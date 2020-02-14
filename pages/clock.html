@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时钟</title>
+    <link rel="stylesheet" href="../css/clock.css">
+    <style></style>
+</head>
+<body>
+    <div class="clock">
+        <ul class="ruling">
+        <!-- ul中存放刻度 -->
+        </ul>
+        <div class="hour"></div>
+        <div class="min"></div>
+        <div class="sec"></div>
+        <div class="center"></div> 
+    </div>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>   
+        function time(){
+            var nowDate = new Date
+            var sec = nowDate.getSeconds() 
+            var min = nowDate.getMinutes() + sec/60  //保证分针的精度
+            var hour = nowDate.getHours() + min/60
+           
+            
+            //将获取的时间转换为角度，24小时转换为720
+            $('.hour').css('transform', `rotate(${hour*30}deg)`)
+            $('.min').css('transform', `rotate(${min*6}deg)`)
+            $('.sec').css('transform', `rotate(${sec*6}deg)`)
+        }
+        time()
+        setInterval(time,1000)
+        //画刻度
+        
+        //向ul中添加60个li做刻度
+        // var li = ''
+        // for (var i=0; i<60;i++){
+        //     li += '<li></li>'
+        //     $('.ruling').html(li);
+        // }
+        // var liCss =''
+        // for(var j = 0; j<60; j++){
+        //     $('.ruling>li:nth-child('+(j+1)+')').css('transform',`rotate(${j*6}deg)`)
+        // }
+    </script>
+</body>
+</html>
