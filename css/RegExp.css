@@ -1,0 +1,87 @@
+a{
+  text-decoration: none;
+}
+h2{
+  font-family: Arial, Helvetica, sans-serif;
+}
+.log{
+    width: 40%;
+    /* border:2px solid black; */
+    margin: 0 auto;
+  }
+  .error, .passwdError,.phoneError{
+    display:none;
+  }
+span{
+      color:red;
+  }
+  .log>h2{
+   text-align: center;
+  }
+.message{
+    padding-left: 50px;
+}
+
+.message label{
+    display:inline-block;
+    width: 90px;
+    margin-right:20px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: right;
+}
+.message input{
+  width: 330px;
+  padding:4px 5px;
+  box-shadow: 2px 2px 3px #EDEDED inset;
+  font-size: 14px;
+  border:1px solid gray;
+  border-radius: 3px;
+}
+.user>input{
+  width: 250px;
+}
+
+.message p{
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: gray;
+  margin-left:120px;
+}
+.ag,.agr,.log a,.check{
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.check{
+  margin-left: 190px;
+  color: red;
+  display:none;
+}
+.send{
+  /* display:inline-block; */
+  margin-left: 120px;
+  padding:5px 10px;
+  color:black;
+  font-size: 14xp;
+  background-color: #EDEDED;
+  border:1px solid gray;
+  border-radius:3px;
+
+}
+.agr{
+  color:black;
+}
+.ag{
+  margin-left: 170px;
+}
+.signIn{
+  display:inline-block;
+  margin-left:200px;
+  margin-top:20px;
+  padding:8px 20px;
+  line-height: 20px;
+  color: white;
+  background-color: #53ad3f;
+  border: solid 1px #43952e;
+  border-radius: 3px;
+}
