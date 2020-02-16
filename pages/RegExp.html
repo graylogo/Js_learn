@@ -38,7 +38,8 @@
         $(".error").css("display", "none");
       });
       // 正则表达式写在外面，避免重复执行
-      var re = /[\w.]/; //包含一位 非数字、字母、下划线
+
+      var re = /[\s.]/; //包含一位 非数字、字母、下划线
       $("#username").blur(function() {
         var nameValue = $(this).val();
 
