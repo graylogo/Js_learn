@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //windows对象  指的就是windows对象  全局对象（在页面内定义的所有全局变量和函数都是存储在  window 浏览器对象内的  但是默认使用的时候会省略Windows ） window.alert()
+        // window.alert('asasa')
+        //windows自带的属性和方法
+        // alert弹窗   
+        // confirm  确认删除内容吗？
+        // prompt()方法用于显示可提示用户进行输入的对话框(带确定和取消)。返回值就是输入的内容
+        
+        //对象
+        // setInterval setTimeout  clearInterval clearTimeout console
+        //a 标签默认跳转 将当前页面直接替换了  可以使用target属性属性值直接写成 _blank  让页面从一个新的窗口打开
+        //open 从新的窗口打开一个页面
+        //close  关闭当前页面
+
+
+        //属性 history location navgator screen innerWidth innerHeight 
+        // history 浏览器的历史记录  依然是一个对象  history.back()后退   history.forward()前进  history.go(-1) 后退一步  2 前进两步
+        //location  href属性实现页面跳转
+        //screen 检测有关客户端屏幕的信息
+
+        //document  DOM文档对象模型  浏览器提供了一种方案让我们开发式使用js去操作浏览器内的各个元素
+        // /当你通过浏览器提供的方案对页面进行修改的时候（eg：修改了某个div的背景色），浏览器可能会对整个页面进行处理
+        //有一些操作会引起浏览器的重绘或回流  （有关优化）
+        // dom 浏览器将整个页面分成多个 dom 节点 比如一个div就是一个元素节点
+        // 属性节点（href  src ）  文本节点（标签之间的内容）
+
+        // 获取元素节点
+        // 1. 通过元素的id名
+        // document.getElementById('idName')   //获取到标签
+        // 2. 通过元素的额class名
+        //只要是能获得多个的方法就获取的是类数组  不直接获取标签本身
+        // document.getElementsByClassName('className')   //获取到一个数组，想要获取就通过数组下标来获取
+        // 3. 通过标签名获取   
+        // document.getElementsByTagName('tagName')  和class一样
+
+    // </script>
+</body>
+</html>

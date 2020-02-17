@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!--</html> 注册 -->
+  <!--</html> 注册 完成三件事-->
+  <!-- 1. 错误信息的提示
+        2. 注册成功的验证
+         3.成功后的跳转 -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -58,7 +61,7 @@
       // var reQq = /^[0-9]{4,12}@(qq|QQ).(com|COM)$/
       // console.log(reQq.test('1943113956@qq.com'))
       // //注册登陆界面
-     
+     var trueName = ''
       $("#username").focus(function() {
         $(".waring").css("display", "block");
         $(".error").css("display", "none");
@@ -68,6 +71,7 @@
       var re = /[\s.]/; //包含一位 除了 数字、字母、下划线
       var reg = /^[a-zA-Z]/ //以字母开头/
       $("#username").blur(function() {
+        trueName = ''     //防止注册过程中第一次正确了给trueName赋值 用户注册前要修改其它名字
         var nameValue = $(this).val();
         if (nameValue === "") {
           $(".waring").css("display", "none");
@@ -93,10 +97,11 @@
           .text('恭喜，此用户名可以注册')
           .css('color','green');
           $(".error").css("display", "none");
-          
+          trueName = nameValue
         }
       });
-
+        //匹配全部重复
+        var repeat = /(\w)\1{5,15}/  //
       //验证密码
       $('#passwd').focus(function(){
         $('.passwdWarn').css('display',"block");
@@ -113,12 +118,20 @@
         }else if(re.test(passwd)){
         $('.passwdWarn').css('display',"none");
         $('.passwdError').css('display',"block").text('密码不符合规范').css('color','red');
-        }else{
+        }else if(repeat.test(passwd) ){
+          //密码过于简单 123456 1234567 123456789 1234567890 0123456789 重复的字符
+          //检测一个字符串满足后一个都是前一个字符递增的结果
+          //判断全相等  /([0-9])\1{5,15}/  表示5-16位重复的数字
+        $('.passwdWarn').css('display',"none");
+        $('.passwdError').css('display',"block").text('密码太简单，请重新输入').css('color','red'); 
+        }
+        else{
         $('.passwdWarn').css('display',"block").text('密码符合规范').css('color','green');;
         $('.passwdError').css('display','none');
         }
       });
 
+      
 //验证手机号 11位数字 以1开头
         var reNum = /^1\d{10}$/
 
@@ -160,8 +173,25 @@
         $('.check').css('display','none');
         $('.signIn').attr('href','http://www.baidu.com')
       }
-     })
+      //点击立即注册提示上面没有输入对的所有信息  （执行一次所有input 的失去焦点事件）
+     //如何在一个事件内执行另一个事件  trriger  模拟别的事件的触发   .trriger('blur')
+      $('#username').trigger('blur')
+      //判断可以注册   定义多个全局变量，分别存储正确的用户名等信息
+     //判断正确信息是否存在  存在就跳转 并将数据传输给后台
+      console.log(trueName)  
+      if (trueName != ''){
+        console.log('注册成功')
+        window.location.href = 'https://baidu.com'
+      }else{
+        console.log('注册失败')
+      }
+     })  
 
+    //  跳转
+    // 如果是a的话修改href 值 默认属性写成javascript:;  或者 javascript:void(0);
+    // 不能写成#  写成需要阻止跳转   (event.prevenDefault())
+     
+     //所有标签 使用window.location.href = '网址'
     </script>
   </body>
 </html>
