@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 轮播图插件 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swiper</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .my_swiper{
+        width: 500px;
+        height: 300px;
+        margin: 0 auto;
+        position: relative;
+        cursor: pointer;
+        
+        }
+        .my_swiper .my_pic{
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
+            position: absolute;
+            transition: opacity 1s;
+        }
+        .my_swiper .my_active_pic{
+            background-color: green;
+            z-index: 1;
+        }
+        .my_list{
+            list-style: none;
+            position:absolute;
+            bottom: 20px;
+            left:20px;
+            z-index: 1;
+        }
+        .my_list>li{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: white;
+            float: left;
+            margin-right: 5px;
+            z-index: 1;
+            cursor: pointer;
+        }
+        .my_list .my_active_color{
+            background-color: red;
+        }
+        .swiper_left,.swiper_right{
+            position: absolute;
+            top:50%;
+            width: 20px;
+            height: 30px;
+            line-height: 30px;
+            color:white;
+            text-align: center;
+            margin-top:-15px;
+            background-color: rgba(0,0,0,0.8);
+            cursor: pointer;
+            user-select: none;
+            z-index:1;
+        }
+        .swiper_left{
+            left:0;
+        }
+        .swiper_right{
+            right:0;
+        }
+
+        /* 用户自己添加的部分 */
+        .my_swiper1 img{
+            position: absolute;
+            width: 100%;
+        }
+        .my_swiper2 img{
+            position: absolute;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="my_swiper my_swiper1">
+        <div class="my_pic my_active_pic"><img src="../images/slide-1.jpg" alt=""/></div>
+        <div class="my_pic"><img src="../images/slide-2.jpg" alt=""/></div>
+        <div class="my_pic"><img src="../images/slide-3.jpg" alt=""/></div>
+        <div class="my_pic"><img src="../images/slide-4.jpg" alt=""/></div>
+        <div class="my_pic"><img src="../images/slide-5.jpg" alt=""/></div>
+    <ul class="my_list">
+        <li class="my_active_color"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="swiper_left">&lt</div>
+    <div class="swiper_right">&gt</div>
+    </div>
+
+    <div class="my_swiper my_swiper2">
+        <div class="my_pic my_active_pic"><img src="../images/slide-1.jpg" alt=""/></div>
+        <div class="my_pic"><img src="../images/slide-2.jpg" alt=""/></div>
+        <div class="my_pic"><img src="../images/slide-3.jpg" alt=""/></div>
+        <div class="my_pic"><img src="../images/slide-4.jpg" alt=""/></div>
+        <div class="my_pic"><img src="../images/slide-5.jpg" alt=""/></div>
+    <ul class="my_list">
+        <li class="my_active_color"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="swiper_left">&lt</div>
+    <div class="swiper_right">&gt</div>
+    </div>
+
+
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+        function MySwiper (selector,option){
+            this.swiperDom = $(selector)
+            // this.option = {width:'',height:''}
+            option = option
+            // this.option = option  下面  this.option.width  传递参数的时候 width : 300
+            // console.log(option)
+
+            //将下面封装成初始化轮播图的功能  this.init()
+            this.width = option.width
+            this.height = option.height
+            this.listClick()
+            this.size()
+            this.arrowClick()
+            // this.autoSlide() 
+        }
+        MySwiper.prototype.listClick = function(){
+            //给按钮点击绑定事件 改变按钮颜色并切换图片
+            var that =this  //避免函数内的this不指向swiper ，将this替换为一个一个变量
+            this.swiperDom.find('.my_list li').click(function(){
+                $(this).addClass('my_active_color').siblings().removeClass('my_active_color')
+                var ind = $(this).index()
+                // console.log(ind)
+                that.swiperDom.find('.my_pic').eq(ind).addClass('my_active_pic').siblings().removeClass('my_active_pic')
+            })
+        }
+        MySwiper.prototype.size = function(){
+            //通过用户传递参数改变盒子大小
+            this.swiperDom.width(this.width)
+            this.swiperDom.height(this.height)
+            this.swiperDom.find('.my_pic').width(this.width)
+            this.swiperDom.find('.my_pic').height(this.height)
+        }
+        MySwiper.prototype.arrowClick = function () { 
+            //点击箭头，切换图片，顺序按钮改变
+            // var num = this.swiperDom.find('.my_list li').index()  //不能这样写，这样获取的永远是0  采用for循环来写
+            for (var i=0;i<this.swiperDom.find('.my_list li').length;i++){
+                var num = this.swiperDom.find('.my_list li').eq(i).index()
+                console.log(num)
+            }
+            
+            var len = this.swiperDom.find('.my_list li').length
+            var that =this   
+            that.swiperDom.find('.swiper_right').click(function(){
+                //点击 右边按钮
+                if(num < len-1){
+                num+= 1;
+            }else{
+                num = 0;
+            }
+            arrowBtnClick()
+            })
+            that.swiperDom.find('.swiper_left').click(function(){
+                //点击左边按钮
+                if(num <= 0){
+                num = len -1;
+            }else{
+                num -= 1;
+            }
+            arrowBtnClick()
+            })
+            function arrowBtnClick(){
+                //封装功能
+                that.swiperDom.find('.my_list li').eq(num).addClass('my_active_color').siblings().removeClass('my_active_color')
+                that.swiperDom.find('.my_pic').eq(num).addClass('my_active_pic').siblings().removeClass('my_active_pic')
+            }
+         }
+        MySwiper.prototype.autoSlide = function(){
+            //自动切换  通过模拟点击右边箭头实现
+            var that = this
+            function a(){that.swiperDom.find(".swiper_right").trigger("click")}
+            var run = setInterval(a ,3000);  //传递函数时不需要加括号
+            //下面的函数不生效
+            that.swiperDom.mouseenter = function(){console.log(2);clearInterval(run)}
+            that.swiperDom.mouseleave = function(){setInterval(a,3000);}
+        }
+         var swiper1 = new MySwiper('.my_swiper1',{width:'600px',height:'300px'})
+        var swiper2 = new MySwiper('.my_swiper2',{width:'400px',height:'200px'})
+    </script>
+</body>
+</html>

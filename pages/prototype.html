@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 构造函数 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script>
+         //5.构造函数  用来创建对象的函数  (类)
+        //工厂模式：（有return）
+        
+        // 构造函数的原型用来创建共有的属性或者方法
+        // 构造函数的函数名大写
+        // 函数内部需要使用this关键字给对象添加属性或者方法
+        // function CreateObj(name,age){
+        //     this.name = name
+        //     this.age = age
+        // }
+        // //构造函数的额调用需要使用 new 关键字
+        // var cat = new CreateObj('白白',10)
+        //访问对象属性的时候可以直接用[]，在里面写字符串或者字符串变量
+
+        //bind call aplay   改变this指向
+        //bind 一个函数可以利用bind方法生成一模一样的函数（函数内的this变成bind方向的参数）
+        //call  使用call替代函数调用，this指向为call的第一个参数                                call(obj,1,2)
+        //apply  同call 如果函数需要传参，call传参直接向后面依次传递即可，apply需要将参数放到数组内  apply(obj,[1,2])
+
+        //继承 原型链 
+        function Father(sex,first_name){
+            this.sex = sex
+            this.first_name = first_name
+        }
+        Father.prototype.say =function(){
+            console.log(this.first_name)
+        }
+        var man = new Father('男','王')
+        man.say()
+
+        function Son(name,age){
+            this.name = name
+            this.age = age
+        }
+        Son.prototype.sing =function(){
+            console.log('我是小王')
+        }
+        // var son = new Son('wang',9)
+        // Son.prototype = Object.assign({},Son.prototype,man)
+        Son.prototype = $.extend({},Son.prototype,man)  
+        var son = new Son('王名','2')
+        console.log(son)
+
+        //对象的合并 将Son和Man进行对象合并
+        //1.对象的for in语句 遍历对象
+        // for (var key in man ){
+        //    console.log(key)
+        //    console.log(man[key])  //输出key对应的值
+        // }
+       //2.使用jquery 的合并对象方法  extend
+    //    var newMan = $.extend({},Father,Son) //前面写空会改变第一个的内容
+
+       //3.原生的Object.assign  兼容性不好
+    //    console.log(newMan)
+    </script>
+</body>
+</html>

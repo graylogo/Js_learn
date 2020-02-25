@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .play {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      outline: none;
+      border: 0;
+    }
+
+    .progress-wrap,
+    .progress {
+      width: 300px;
+      height: 10px;
+      border-radius: 5px;
+    }
+
+    .progress-wrap {
+      background-color: #000;
+    }
+
+    .progress {
+      width: 0px;
+      background-color: red;
+    }
+
+    .volume-container {
+      width: 40px;
+      height: 160px;
+      margin-top: 20px;
+      background-color: #000;
+      overflow: hidden;
+    }
+
+    .volume-wrap {
+      width: 10px;
+      height: 120px;
+      background-color: #666;
+      margin: 0 auto;
+      margin-top: 20px;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    .volume {
+      background-color: red;
+      width: 10px;
+      height: 96px;
+      border-radius: 5px;
+      position: absolute;
+      bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- html 5    article   header  footer section ..... -->
+  <!-- jquery 中基本上没有相关的方法。基本上都是原生 js 自带的 -->
+  <!-- audio -->
+  <!-- video -->
+  <audio class="music" src="./musics/加勒比海盗 - 音乐盒.mp3"></audio>
+  <button class="play">播放</button>
+  <!-- 1. 当成背景音乐自动循环播放并且有一个小的音乐按钮可以暂停的播放 -->
+  <!-- 2. 音乐播放器自定制音乐控制器  -->
+  <div class="music-control">
+    <button class="play-btn">播放</button>
+    <div class="progress-wrap">
+      <div class="progress"></div>
+    </div>
+    <div class="volume-container">
+      <div class="volume-wrap">
+        <div class="volume"></div>
+      </div>
+    </div>
+
+  </div>
+  <script>
+    // 如何使用 js 控制音频   
+    // 获取页面中的音频 dom 节点对象,该对象向有一系列的属性和方法 用来控制该音频的
+    // 开关 
+    var isPlay = false
+    document.querySelector('.play').onclick = function () {
+      // 点击按钮播放音频
+      var musicDom = document.querySelector('.music')
+      if (!isPlay) {
+        musicDom.play()
+        this.innerHTML = '暂停'
+        isPlay = true
+      } else {
+        musicDom.pause()
+        this.innerHTML = '播放'
+        isPlay = false
+      }
+    }
+    document.querySelector('.music').volume = document.querySelector('.volume').offsetHeight / document.querySelector('.volume-wrap').offsetHeight
+    // 为什么在事件之外获取不到音频的总时长 
+    // 因为事件外面的获取操作时刚打开页面就执行了 此时音频在浏览器中还没有准备好，所以获取不到。需要在事件内获取
+    document.querySelector('.play-btn').onclick = function () {
+      // 点击按钮播放音频
+      var musicDom = document.querySelector('.music')
+      if (!isPlay) {
+        musicDom.play()
+        this.innerHTML = '暂停'
+        isPlay = true
+        // 进度条移动    1. 音乐总时长    2.已播放时长   3. 进度条的总长度   4？ 进度条当前的位置
+      } else {
+        musicDom.pause()
+        this.innerHTML = '播放'
+        isPlay = false
+      }
+    }
+
+    // 音乐播放事件   ontimeupdate  播放时一直触发的事件
+    var progressWidth = document.querySelector('.progress-wrap').offsetWidth
+
+    document.querySelector('.music').ontimeupdate = function () {
+      console.log(this.duration)
+      console.log(this.currentTime)
+      document.querySelector('.progress').style.width = progressWidth * this.currentTime / this.duration + 'px'
+    }
+    // 点击控制引音量大小
+    var volumeHeight = document.querySelector('.volume-wrap').offsetHeight
+    document.querySelector('.volume-wrap').onclick = function (event) {
+      // 获取点击的当前位置距离顶部的距离
+      // 当前元素距离文档顶部的距离   
+      console.log(event.clientY)
+      console.log(this.offsetTop)
+      document.querySelector('.volume').style.height = volumeHeight - (event.clientY - this.offsetTop) + 'px'
+      document.querySelector('.music').volume = (volumeHeight - (event.clientY - this.offsetTop)) / volumeHeight
+    }
+  </script>
+</body>
+
+</html>

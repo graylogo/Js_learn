@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>music</title>
+    <style>
+        .play{
+            position: fixed;
+            top:10px;
+            right:10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border:0;
+            outline:none;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <!-- h5新增标签 jq中基本上没有相关的方法  基本是原生js自带的 audio -->
+    <!-- video -->
+    <!-- <audio src="../music/用力签下你赐予我的名字.mp3" controls></audio> -->
+    <audio class="music" src="../music/用力签下你赐予我的名字.mp3"></audio>
+    <!-- 1.当成背景音乐自动循环播放，并且有一个小的按钮可以暂停播放 -->
+    <!-- 2.自定制音乐播放器 -->
+    <button class="play">播放</button>
+    <script>
+        //使用js控制音频
+        var isPlay = false;
+        
+        document.querySelector('.play').onclick = function(){
+            //直接获取页面中的音频dom节点 该对象下有一系列的属性和方法
+            var musicCon = document.querySelector('.music')
+            if(!isPlay){
+                // musicCon.paly
+                document.querySelector('.music').play()
+                this.innerHTML = '暂停'
+                isPlay = true
+            }else{
+                // musicCon.pause
+                document.querySelector('.music').pause()
+                this.innerHTML = '播放'
+                isPlay = false
+            }
+        }
+
+        // js currentTme事件 监听音乐播放状态，边播放边触发
+    </script>
+</body>
+</html>

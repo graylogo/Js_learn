@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 使用原生模拟jq动画 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            /* transition: transform 1s; */
+            transition: all 1s;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <button class="run">run</button>
+    <script>
+        document.querySelector('.run').onclick =function(){
+            // document.querySelector('.box').style.transform = 'translateX(200px)'
+            document.querySelector('.box').style.width = '0px'
+            document.querySelector('.box').style.height = '0px'
+            document.querySelector('.box').style.opacity = '0'
+            setTimeout(function(){
+                document.querySelector('.box').style.dosplay = 'none'
+            },1000)
+        }
+    </script>
+</body>
+</html>

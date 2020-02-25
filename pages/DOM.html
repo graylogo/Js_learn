@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 300px;
+            height: 300px;
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+
+    </div>
+    <button class="btn">按钮</button>
+    <script>
+         //document  DOM文档对象模型  浏览器提供了一种方案让我们开发式使用js去操作浏览器内的各个元素
+        // /当你通过浏览器提供的方案对页面进行修改的时候（eg：修改了某个div的背景色），浏览器可能会对整个页面进行处理
+        //有一些操作会引起浏览器的重绘或回流  （有关优化）
+        // dom 浏览器将整个页面分成多个 dom 节点 比如一个div就是一个元素节点
+        // 属性节点（href  src ）  文本节点（标签之间的内容）
+
+        // 获取元素节点
+        // 1. 通过元素的id名
+        // document.getElementById('idName')   //获取到标签
+        // 2. 通过元素的额class名
+        //只要是能获得多个的方法就获取的是类数组  不直接获取标签本身
+        // document.getElementsByClassName('className')   //获取到一个数组，想要获取就通过数组下标来获取
+        // 3. 通过标签名获取   
+        // document.getElementsByTagName('tagName')  和class一样
+        // document.querySelector   //返回文档中匹配指定 CSS 选择器的一个元素。
+        // document.querySelector('.btn').onclick = 
+
+        //onblur  onfocus  onmouseenter
+
+        //点击按钮，实现box颜色改变
+        document.querySelector('.btn').onclick = function(){
+            console.log(1)
+            document.querySelector('.box').style.backgroundColor = 'red'
+        }
+        document.querySelector('.btn'),setAttribute('')
+
+        //让一个元素消失 
+        // disply:none;
+        // opcity: 0;
+        // background-color:rgba(0,0,0,0)
+        // transform:scale(0)   缩放
+        
+        // 当用transition监听一个事件时，只要这个事件发生了变化，transition就会触发  过渡
+        // transition:opcity 1s;
+
+
+        //dom操作
+        //创建空标签   //$('<li>')
+            var newDiv = document.createElement('div')
+            newDiv.innerText('hello') //设置标签内的内容
+            newDiv.innerHTML('<span>hello</span>') //设置新标签和文字内容
+            newDiv.className = test
+            //删除  父级元素节点.removeChild(被删除的节点)
+            newDiv.removeChild(newDiv.querySelector('span'))  //删除span标签
+    </script>
+</body>
+</html>

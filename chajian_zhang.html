@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- 张老师上课讲的较为完整的轮播图插件，包括初始化，默认等功能 -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .my-swiper {
+      width: 600px;
+      height: 300px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .my-swiper .swiper-slide {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      /* 过渡  当你使用过渡监听一个样式时 只要该样式发生了变化就会将这个变化用过渡效果展现 */
+      transition: opacity 1s;
+      background-color: #ccc;
+      height: 300px;
+    }
+
+    .my-swiper .swiper-slide.swiper-active {
+      z-index: 1;
+      opacity: 1;
+    }
+
+    .my-swiper>.swiper-list {
+      list-style: none;
+      position: absolute;
+      left: 40px;
+      bottom: 20px;
+      z-index: 1;
+    }
+
+    .my-swiper>.swiper-list>li {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      float: left;
+      margin-right: 10px;
+      background-color: #fff;
+    }
+
+    .my-swiper .swiper-list li.swiper-active-color {
+      background-color: #00b3d4;
+    }
+
+    .my-swiper .swiper-left,
+    .my-swiper .swiper-right {
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      margin-top: -40px;
+      height: 80px;
+      background-color: rgba(0, 0, 0, 0.4);
+      font-size: 20px;
+      line-height: 80px;
+      text-align: center;
+      color: #fff;
+      z-index: 1;
+      cursor: pointer;
+      /* 双击文本不被选中 */
+      user-select: none;
+    }
+
+    .my-swiper .swiper-left {
+      left: 0;
+    }
+
+    .my-swiper .swiper-right {
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 必须的结构  命名  不要和用户的命名冲突-->
+  <!-- 结构对应的样式  -->
+  <!-- my-swiper 用于写样式的   my-swiper1 用来区分多个轮播的-->
+  <div class="my-swiper1 my-swiper">
+    <div class="swiper-slide swiper-active">1</div>
+    <div class="swiper-slide">2</div>
+    <div class="swiper-slide">3</div>
+    <div class="swiper-slide">4</div>
+    <div class="swiper-slide">5</div>
+    <div class="swiper-slide">6</div>
+    <ul class="swiper-list">
+      <!-- 定义一个自定义属性 用于 js 操作 -->
+
+    </ul>
+    <!-- <div class="swiper-left">＜</div>
+    <div class="swiper-right">＞</div> -->
+  </div>
+
+  <div class="my-swiper2 my-swiper">
+    <div class="swiper-slide swiper-active">1</div>
+    <div class="swiper-slide">2</div>
+    <div class="swiper-slide">3</div>
+    <div class="swiper-slide">4</div>
+    <div class="swiper-slide">5</div>
+    <ul class="swiper-list">
+      <!-- 定义一个自定义属性 用于 js 操作 -->
+    </ul>
+    <div class="swiper-left">＜</div>
+    <div class="swiper-right">＞</div>
+  </div>
+  <script src="./js/jquery-3.4.1.min.js"></script>
+  <script>
+    // 做一个 仿京东 轮播图插件
+    function MySwiper(selector, option) {
+      // 构造函数 私有的属性或方法
+      // selector 获取最大的dom节点   用户决定要将那个 div 创建成轮播图
+      // option 是一个对象 设置的是轮播本身的特殊属性 比如 (轮播图的宽高  存不存在箭头或按钮 自动播放)
+      this.swiperDom = $(selector)
+      // 配置 （大小  是否自动播放 是否存在左右箭头 是否存在分页器 ）
+      // 默认配置
+      this.defaultOption = {
+        width: 600,
+        height: 300,
+        autoPlay: true,
+        isHasPagination: true,
+        isHasArrow: true
+      }
+      // 将用户配置和默认配置合并 成最终配置
+      this.option = $.extend({}, this.defaultOption, option)
+      // 默认就执行绑定事件功能
+      // 其实也应该定义成共有的方法叫修改轮播图大小
+      // 切换的对应的索引
+      this._index = 0
+      // slide 的个数
+      this.slideLength = this.swiperDom.find('.swiper-slide').length
+      // 自动播放的返回值
+      this.loop = 0
+
+      // 初始化轮播图
+      this.init()
+    }
+    // 共有的 创建分页器 点击分页器事件
+    MySwiper.prototype.btnClick = function () {
+      var that = this
+      // 创建分页器 需要使用循环创建多个 li     for    
+      console.log(that.slideLength)
+      for (var i = 0; i < that.slideLength; i++) {
+        var newLi = $('<li>')
+        that.swiperDom.find('.swiper-list').append(newLi)
+      }
+      that.swiperDom.find('.swiper-list li').eq(that._index).addClass('swiper-active-color')
+      // 给按钮绑定点击事件并且实现切换图片以及按钮变色功能
+      // 避免函数内的this不指向我们的 swiper 所以需要先将 this 替换成一个变量
+      that.swiperDom.find('.swiper-list li').click(function () {
+        var ind = $(this).index()
+        // 函数内this 指的是谁
+        that._index = ind
+        that.change(ind)
+        // $(this).addClass('swiper-active-color').siblings().removeClass('swiper-active-color')
+        // that.swiperDom.find('.swiper-slide').eq(ind).addClass('swiper-active').siblings().removeClass('swiper-active')
+      })
+    }
+    // 左右箭头切换功能
+    MySwiper.prototype.arrowClick = function () {
+      var that = this
+      // 获取所有的按钮找到变色那一个
+      that.swiperDom.find('.swiper-right').click(function () {
+        that._index++
+        // 0 1 2 3 4 
+        if (that._index > that.slideLength - 1) {
+          that._index = 0
+        }
+        // console.log(that._index)
+        // that.swiperDom.find('.swiper-list li').eq(that._index).addClass('swiper-active-color').siblings().removeClass('swiper-active-color')
+        // that.swiperDom.find('.swiper-slide').eq(that._index).addClass('swiper-active').siblings().removeClass('swiper-active')
+        that.change(that._index)
+      })
+      that.swiperDom.find('.swiper-left').click(function () {
+        that._index--
+        // 0 1 2 3 4 
+        if (that._index < 0) {
+          that._index = that.slideLength - 1
+        }
+        // console.log(that._index)
+        // that.swiperDom.find('.swiper-list li').eq(that._index).addClass('swiper-active-color').siblings().removeClass('swiper-active-color')
+        // that.swiperDom.find('.swiper-slide').eq(that._index).addClass('swiper-active').siblings().removeClass('swiper-active')
+        that.change(that._index)
+      })
+    }
+    // 共有切换功能   按钮变色以及图片切换    
+    MySwiper.prototype.change = function (index) {
+      this.swiperDom.find('.swiper-list li').eq(index).addClass('swiper-active-color').siblings().removeClass('swiper-active-color')
+      this.swiperDom.find('.swiper-slide').eq(index).addClass('swiper-active').siblings().removeClass('swiper-active')
+    }
+    // 修改大小的配置方法
+    MySwiper.prototype.changeSize = function () {
+      this.swiperDom.width(this.option.width)
+      this.swiperDom.height(this.option.height)
+      this.swiperDom.find('.swiper-slide').width(this.option.width)
+      this.swiperDom.find('.swiper-slide').height(this.option.height)
+    }
+    // 自动播放功能
+    MySwiper.prototype.autoPlay = function () {
+      var that = this
+      that.loop = setInterval(function () {
+        that._index++
+        if (that._index > that.slideLength - 1) {
+          that._index = 0
+        }
+        that.change(that._index)
+      }, 2000);
+    }
+
+    // 轮播图滑入滑出
+    MySwiper.prototype.mouseHover = function () {
+      var that = this
+      that.swiperDom.mouseenter(function () {
+        clearInterval(that.loop)
+      })
+      that.swiperDom.mouseleave(function () {
+        that.autoPlay()
+      })
+    }
+    // 初始化轮播图的功能
+    MySwiper.prototype.init = function () {
+
+      this.changeSize()
+      if (this.option.isHasPagination) {
+        this.btnClick()
+      }
+      if (this.option.isHasArrow) {
+        this.arrowClick()
+      }
+      if (this.option.autoPlay) {
+        this.autoPlay()
+        this.mouseHover()
+      }
+    }
+
+    var swiper1 = new MySwiper('.my-swiper1', { width: 400, height: 200, autoPlay: false, isHasPagination: false, isHasArrow: false })
+    var swiper2 = new MySwiper('.my-swiper2', { width: 600, height: 400 })
+
+
+    // 类    ---->   对象(页面上的一个轮播图)    
+    // 面向对象编程 
+
+    // 效果effect  左右  和  渐入渐出
+  </script>
+</body>
+
+</html>

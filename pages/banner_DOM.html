@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 用原生js写轮播图，防止多次点击 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banner</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .banner {
+        width: 500px;
+        height: 255px;
+        margin: 0 auto;
+        position: relative;
+      }
+      .banner img {
+        position: absolute;
+        width: 100%;
+        transition: opacity 1s;
+      }
+      .banner a:first-child img {
+        z-index: 1;
+      }
+      .list {
+        list-style: none;
+        position: absolute;
+        left: 30px;
+        bottom: 20px;
+        z-index: 1;
+      }
+      .list > li {
+        float: left;
+        width: 10px;
+        height: 10px;
+        z-index: 1;
+        border-radius: 50%;
+        background-color: #fff;
+        margin-right: 5px;
+      }
+      .list > li:first-child {
+        background-color: red;
+      }
+      /* 垂直居中 */
+      /* 1. 定位 参照父级定位   top：50%  margin-top：自身高度一半 */
+      /* 2. *** 定位   top：50%  translateY(-50%)(没有高度的时候)  也可以写自身高度的一半 */
+      /* 3. flex布局 */
+      /* 4. margin-top 但是要注意bug问题 */
+      /* 5. *** 参照父级定位，四个方向（top bottom left right）全部设置为0 */
+      .left,.right {
+        /* font-size: 24px;
+        font-weight: bold;
+        line-height: 24px; */
+        position: absolute;
+        top: 50%;
+        /* translate:(-50%); */
+        width: 20px;
+        height: 40px;
+        margin-top: -40px;
+        background-color:rgba(0,0,0,0.4);
+        color: white;
+        z-index: 2;
+        cursor: pointer; /*鼠标指针状态 */
+        /* 阻止双击选中文字 */
+        user-select: none;
+        text-align: center;
+        padding-top: 20px;
+        border-radius: 6px;
+      }
+      .left{
+          left:0;
+      }
+      .right {
+        right: 0;
+      }
+      .left:hover,.right:hover{
+          color: aqua;
+          background-color: rgba(0,0,0,0.8);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <a href="#1"> <img src="../images/slide-1.jpg" alt=""/></a>
+      <a href="#2"> <img src="../images/slide-2.jpg" alt=""/></a>
+      <a href="#3"> <img src="../images/slide-3.jpg" alt=""/></a>
+      <a href="#4"><img src="../images/slide-4.jpg" alt=""/></a>
+      <a href="#5"><img src="../images/slide-5.jpg" alt=""/></a>
+      <ul class="list">
+        <li data-index="0" class="btn"></li>
+        <li data-index="1" class="btn"></li>
+        <li data-index="2" class="btn"></li>
+        <li data-index="3" class="btn"></li>
+        <li data-index="4" class="btn"></li>
+      </ul>
+      <div class="left">&lt</div>
+      <div class="right">&gt</div>
+    </div>
+
+    <script>
+      var setLi = document.querySelectorAll(".list li");
+      var getImg = document.querySelectorAll(`.banner img `);
+      for (var i = 0; i < setLi.length; i++) {
+        setLi[i].onclick = function() {
+          //方案一  修改按钮颜色，当前按钮修改为蓝色，其他按钮改为白色
+          //方案二  将所有按钮改为白色，再将选中的按钮改为蓝色
+          for (var j = 0; j < setLi.length; j++) {
+            setLi[j].style.backgroundColor = "#fff";
+          }
+          //    var a = setLi[i].getAttribute('type')
+          // var a = setLi[i].style
+          //原生js 获取当前 事件触发元素 直接使用  this  关键字即可
+          this.style.backgroundColor = "red";
+
+          //切换图片 如何找到对应的图片  通过自定义属性给li设置类似索引值的内容
+          //    在html中定义一个自定义属性 见上
+          for (var k = 0; k < getImg.length; k++) {
+            getImg[k].style.backgroundColor = "#fff";
+            getImg[k].style.opacity = 0;
+            getImg[k].style.zIndex = 0;
+          }
+          var ind = this.getAttribute("data-index");
+          index = ind*1;  //保证点击导航点和点击左右索引值一样
+          getImg[ind].style.opacity = 1;
+          getImg[ind].style.zIndex = 1;
+          // jq中使用siblings寻找同级的兄弟
+        };
+      }
+      //can not read property 'style' of undefined  不能读取style元素的属性
+
+      //实现图片变化的功能
+
+      //！多次点击箭头，会反复触发按钮绑定的事件，点了多少次就会触发多少次，需要优化
+      //    连续点击时如果没有超过500ms，后一次点击不生效
+    var index = 0;
+      var nowDate = 0;
+      document.querySelector(".right").onclick = function() {
+        var date = new Date().getTime();
+        // console.log(date - nowDate);
+        if (date - nowDate > 1000) {
+          nowDate = date;
+          if (index < getImg.length - 1) {
+            index = index + 1;
+          } else {
+            index = 0;
+          }
+          banner(index);
+        }
+      };
+
+      document.querySelector(".left").onclick = function() {
+        var date = new Date().getTime();
+        // console.log(date-nowDate)
+        if (date - nowDate > 1000) {
+          nowDate = date;
+          if (index > 0) {
+            index = index - 1;
+          } else {
+            index = getImg.length - 1;
+          }
+          banner(index);
+        }
+      };
+      var banner = function(index) {
+        for (var j = 0; j < setLi.length; j++) {
+          setLi[j].style.backgroundColor = "#fff";
+        }
+        setLi[index].style.backgroundColor = "red";
+        for (var k = 0; k < getImg.length; k++) {
+          getImg[k].style.backgroundColor = "#fff";
+          getImg[k].style.opacity = 0;
+          getImg[k].style.zIndex = 0;
+        }
+        // var ind = this.getAttribute('data-index')
+        getImg[index].style.opacity = 1;
+        getImg[index].style.zIndex = 1;
+      };
+
+      //自动轮播功能
+      var run = setInterval(document.querySelector('.right').onclick,3000);
+      document.querySelector('.banner').onmouseenter = function(){
+          clearInterval(run);
+      }
+      document.querySelector('.banner').onmouseleave = function(){
+       var run = setInterval(document.querySelector('.right').onclick,3000);
+      }
+      
+    //   三目运算符  条件 ？ 真的情况 ： 假的情况 
+
+      //函数封装
+    //   jq修改样式的方法 css  removeClass toggleClass animate
+    //用原生功能给一个元素添加class  
+    //$('.box').addClass('active')
+    function myAddClass(element,newName){
+        //修改了原来的class拼接上新的class
+//1. 获取class的值   element.getAttribute('class')        方法二：  ele.className()
+// 2. 如何设置class的值  element.setAttribute('class',className)    方法二： element.className = newClass
+        var old = className;
+        element.className = old +' '+ newClass;
+    }
+    </script>
+  </body>
+</html>
