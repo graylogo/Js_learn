@@ -1,49 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- 日期 -->
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 日期 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>日期的操作</title>
     <style>
-        span{
-            color: red;
-            font-size: 50px;
-        }
+      span {
+        color: red;
+        font-size: 50px;
+      }
     </style>
-</head>
-<body>
-    <span class="hours"></span>:
-    <span class="min"></span>:
+  </head>
+  <body>
+    <span class="hours"></span>: <span class="min"></span>:
     <span class="second"></span>
     <span class="time"></span>
     <script src="../js/jquery-3.4.1.js"></script>
     <script>
-        // 日期 内置对象  用于获取当前时间   对日期进行处理
-        //创建
-        // 在打开页面的时候创建一个当前时间点额对象   输出如下： 每次刷新改变时间
-        // Thu Feb 13 2020 11:12:33 GMT+0800 (China Standard Time)
-        var date = new Date()
-        console.log(date)
-        //日期对象的方法
+      // 日期 内置对象  用于获取当前时间   对日期进行处理
+      //创建
+      // 在打开页面的时候创建一个当前时间点额对象   输出如下： 每次刷新改变时间
+      // Thu Feb 13 2020 11:12:33 GMT+0800 (China Standard Time)
+      var date = new Date();
+      console.log(date);
+      //日期对象的方法
 
-        //计时器
+      //计时器
 
-        //在页面上反复输出当前时间的 秒数
-    function show(){
-        var nowDate = new Date()   //要想获取时间，先要创建新的时间对象
-        var hours = nowDate.getHours()
-        var min = nowDate.getMinutes()
-        var second = nowDate.getSeconds()
-        $(".hours").text(hours)
-        $(".min").text(min)
-        $(".second").text(second)
-        $(".time").text(`${hours}:${min}:${second}`)
-        
-    }
-    show()
-    setInterval(show,1000);
-        
+      //在页面上反复输出当前时间的 秒数
+      function show() {
+        var nowDate = new Date(); //要想获取时间，先要创建新的时间对象
+        var hours = nowDate.getHours();
+        var min = nowDate.getMinutes();
+        var second = nowDate.getSeconds();
+        $(".hours").text(hours);
+        $(".min").text(min);
+        $(".second").text(second);
+        $(".time").text(`${hours}:${min}:${second}`);
+      }
+      show();
+      setInterval(show, 1000);
     </script>
-</body>
+  </body>
 </html>

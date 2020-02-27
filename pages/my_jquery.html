@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- 封装一个jq库，实现点击click事件改变css样式 -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>点击按钮</title>
+    <style>
+      .box {
+        width: 300px;
+        height: 300px;
+        background-color: #ccc;
+      }
+      .content {
+        width: 100px;
+        height: 100px;
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      23445
+      <div class="content"></div>
+    </div>
+    <button class="btn">点击变色</button>
+    <script src="../js/my_jquery.1.0.0.js"></script>
+    <script>
+      // document.querySelector('.box').style.backgroundColor = 'red'
+      new $(".btn").click(function() {
+        // new $('.box').css('backgroundColor','#666')
+        $(".box").css("backgroundColor", "blue");
+        $(".content").css({ backgroundColor: "red" });
+      });
+    </script>
+  </body>
+</html>
